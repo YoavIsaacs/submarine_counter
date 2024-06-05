@@ -2,6 +2,7 @@ import random
 import subCounter
 
 
+# Function to create a random sea grid with submarines
 def create_sea():
     max_rows = 50
     max_cols = 50
@@ -10,6 +11,7 @@ def create_sea():
     cols = random.randint(10, max_cols)
     number_of_submarines = random.randint(1, 10)
 
+    # Initialize sea grid with water ('O')
     sea = [['O' for _ in range(cols)] for _ in range(rows)]
 
     actual_num_submarines = 0
@@ -21,7 +23,8 @@ def create_sea():
         placed = False
         attempts = 0
 
-        while not placed and attempts < 100:  # Limit attempts to avoid infinite loops
+        # Attempt to place a submarine, limit attempts to avoid infinite loops
+        while not placed and attempts < 100:
             top_row = random.randint(1, rows - submarine_height - 1)
             top_col = random.randint(1, cols - submarine_width - 1)
 
@@ -36,6 +39,7 @@ def create_sea():
                     break
 
             if can_place:
+                # Place the submarine
                 for i in range(submarine_height):
                     for j in range(submarine_width):
                         sea[top_row + i][top_col + j] = 'X'
@@ -47,12 +51,15 @@ def create_sea():
     return sea, actual_num_submarines
 
 
+# Function to print the sea grid
 def print_sea(sea):
     for row in sea:
         print(row)
 
 
+# Function to check predefined edge cases
 def check_edge_cases():
+    # Edge case 1: The whole sea is one big submarine
     sea = [
         ['X', 'X', 'X', 'X'],
         ['X', 'X', 'X', 'X'],
@@ -65,6 +72,7 @@ def check_edge_cases():
     else:
         print("Edge case 1 failed.")
 
+    # Edge case 2: No submarines in the sea
     sea = [
         ['O', 'O', 'O', 'O'],
         ['O', 'O', 'O', 'O'],
