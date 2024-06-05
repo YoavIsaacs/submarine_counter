@@ -1,4 +1,5 @@
 import random
+import subCounter
 
 
 def create_sea():
@@ -49,3 +50,29 @@ def create_sea():
 def print_sea(sea):
     for row in sea:
         print(row)
+
+
+def check_edge_cases():
+    sea = [
+        ['X', 'X', 'X', 'X'],
+        ['X', 'X', 'X', 'X'],
+        ['X', 'X', 'X', 'X'],
+        ['X', 'X', 'X', 'X']
+    ]
+    print("Checking edge case 1 - the whole \"sea\" is one big submarine")
+    if subCounter.count_submarines(sea) == 1:
+        print("Edge case 1 passed!")
+    else:
+        print("Edge case 1 failed.")
+
+    sea = [
+        ['O', 'O', 'O', 'O'],
+        ['O', 'O', 'O', 'O'],
+        ['O', 'O', 'O', 'O'],
+        ['O', 'O', 'O', 'O']
+    ]
+    print("Checking edge case 2 - no submarines")
+    if subCounter.count_submarines(sea) == 0:
+        print("Edge case 2 passed!")
+    else:
+        print("Edge case 2 failed.")
