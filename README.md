@@ -1,13 +1,13 @@
 # SUBMARINE COUNTER + TESTER
 
-This project consistf of a solution to the submarine counting problem, and an automated tester for the solution.
+This project consists of a solution to the submarine counting problem, and an automated tester for the solution.
 
 ### THE PROBLEM EXPLAINED
-Given a n*m matrix, that represents the "sea", we need to count how many "submarines" are present in the sea.
+Given a n*m matrix, that represents the "sea", we need to count how many "submarines" are present in the "sea".
 ### COMPONENTS EXPLAINED
 * A sea tile is represented by 'O'.
 * A submarine tile is represented by 'X'.
-* All submarines are a full rectangle.
+* All submarines are a solid rectangle.
 * Submarines cannot touch - unclear if they can diagonally, the tester covers both cases.
 ### TESTER ALGORITHM
 The algorithm searches the matrix from top to bottom, and left to right. Since this is the method of scanning, when encountering a new submarine, it will be the top-left cell of said submarine. So once we encounter a cell of a submarine, we check if it's the top-left cell. If it is, we increment our submarine counter, otherwise we ignore the cell.
