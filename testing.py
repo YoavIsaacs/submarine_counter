@@ -84,3 +84,112 @@ def check_edge_cases():
         print("Edge case 2 passed!")
     else:
         print("Edge case 2 failed.")
+
+
+def check_legal_sea(sea, diagonal_check):
+    # checking if the given sea is a valid matrix
+    if not sea or not all(len(row) == len(sea[0]) for row in sea):
+        return False
+
+    rows = len(sea)
+    cols = len(sea[0])
+    visited = [[False] * cols for _ in range(rows)]
+
+    for r in range(rows):
+        for c in range(cols):
+            if sea[r][c] == 'X' and not visited[r][c]:
+                submarine_cells, x = dfs(r, c, visited, rows, cols, sea)
+                # checking if the submarine is "solid"
+                min_r = min(submarine_cells, key=lambda xr: xr[0])[0]
+                max_r = max(submarine_cells, key=lambda xr: xr[0])[0]
+                min_c = min(submarine_cells, key=lambda xc: xc[1])[1]
+                max_c = max(submarine_cells, key=lambda xc: xc[1])[1]
+                for i in range(min_r, max_r + 1):
+                    for j in range(min_c, max_c + 1):
+                        if sea[i][j] != 'X':
+                            return False
+                if not diagonal_check:
+                    # check for touching submarines including at the diagonals
+                    for x, y in submarine_cells:
+                        for dx, dy in [(-1, -1), (-1, 1), (1, -1), (1, 1)]:
+                            nx, ny = x + dx, y + dy
+                        if 0 <= nx < rows and 0 <= ny < cols and sea[nx][ny] == 'X' and (nx, ny) not in submarine_cells:
+                            return False
+                else:
+                    for x, y in submarine_cells:
+                        for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                            nx, ny = x + dx, y + dy
+                        if 0 <= nx < rows and 0 <= ny < cols and sea[nx][ny] == 'X' and (nx, ny) not in submarine_cells:
+                            return False
+    return True
+
+
+def dfs(r, c, visited, rows, cols, sea):
+    stack = [(r, c)]
+    cells = []
+    xr, yr = 0, 0
+    while stack:
+        xr, yr = stack.pop()
+        if visited[xr][yr]:
+            continue
+        visited[xr][yr] = True
+        cells.append((xr, yr))
+        for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+            nx, ny = xr + dx, yr + dy
+            if 0 <= nx < rows and 0 <= ny < cols and sea[nx][ny] == 'X' and not visited[nx][ny]:
+                stack.append((nx, ny))
+    return cells, xr
+
+
+def check_invalid_sea(diagonal_check):
+    sea = [
+        ['X', 'X', 'X', 'X'],
+        ['X', 'X', 'X', 'X'],
+        ['X', 'X', 'X', 'X'],
+        ['O', 'X', 'X', 'X']
+    ]
+    print("Expecting illegal sea")
+    if check_legal_sea(sea, diagonal_check):
+        print("Illegal sea, test passed")
+    sea = [
+        ['X', 'X', 'O', 'O'],
+        ['X', 'X', 'O', 'O'],
+        ['O', 'O', 'X', 'X'],
+        ['O', 'O', 'X', 'X']
+    ]
+    if diagonal_check:
+        print("Expecting legal sea")
+        if check_legal_sea(sea, diagonal_check):
+            print("Legal sea, test passed")
+        else:
+            print("Illegal sea, test failed")
+    else:
+        print("Expecting illegal sea")
+        if not check_legal_sea(sea, diagonal_check):
+            print("Illegal sea, test passed")
+        else:
+            print("Legal sea, test failed")
+    sea = [
+        ['X', 'X', 'X', 'O'],
+        ['X', 'O', 'X', 'O'],
+        ['X', 'X', 'X', 'O'],
+        ['O', 'O', 'O', 'O']
+    ]
+
+    print("Expecting illegal sea")
+    if not check_legal_sea(sea, diagonal_check):
+        print("Illegal sea, test passed")
+    else:
+        print("Legal sea, test failed")
+
+    sea = [
+        ['X', 'O', 'O', 'O'],
+        ['X', 'O', 'O', 'O'],
+        ['X', 'X', 'X', 'O'],
+        ['O', 'O', 'O', 'O']
+    ]
+    print("Expecting illegal sea")
+    if not check_legal_sea(sea, diagonal_check):
+        print("Illegal sea, test passed")
+    else:
+        print("Legal sea, test failed")

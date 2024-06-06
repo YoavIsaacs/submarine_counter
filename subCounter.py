@@ -17,8 +17,4 @@ def count_submarines(sea):
 # Function to check if the current cell is the first cell of a submarine
 def check_if_first_cell(i, j, sea):
     # Check if there are any submarine cells above or to the left
-    if i > 0 and sea[i - 1][j] == 'X':
-        return 0
-    if j > 0 and sea[i][j - 1] == 'X':
-        return 0
-    return 1
+    return 0 if (i > 0 and sea[i - 1][j] == 'X') or (j > 0 and sea[i][j - 1] == 'X') else 1
