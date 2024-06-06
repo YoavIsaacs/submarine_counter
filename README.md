@@ -18,7 +18,7 @@ It does so by checking if all submarines are "solid" (no sea tiles in the the mi
 This method generates all "unfixed" test cases, by randomizing the size of the matrix and the number of submarines, and places them randomly on the board, ensuring none touch, and that all submarines will fit. The mothid returns the generated matrix and the number of submarines created, enabling testing.
 ### TESTING PROCESS
 The program starts with predefined edge cases, to ensure the testing is done properly. Once all edge cases are dealt with, it will generate tests according to the amount of tests wanted by the user.
-###INPUT ARGUMENTS
+### INPUT ARGUMENTS
 Running the program via the terminal needs two extra arguments:
 * The number of tests the user wishes to run.
 * "yes"/"y"/"no"/"n" - if the user wants to allow diagonally touching submarines or not.
